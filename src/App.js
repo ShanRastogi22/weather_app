@@ -1,8 +1,9 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Img from "./img/Img.jpg";
 import { useEffect, useState } from 'react';
 import axios from "axios";
+import Search from "./img/images/search.png"
+import Rain from "./img/images/rain.png";
 
 function App() {
 
@@ -12,12 +13,12 @@ function App() {
 
   const getWetherDetails = (cityName) => {
     if (!cityName) return
-    const apiURL ="http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey
+    const apiURL = "http://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&APPID=" + apiKey
     axios.get(apiURL).then((res) => {
-      console.log("response",res)
+      console.log("response", res)
 
       setData(res.data)
-    
+
 
     }).catch((err) => {
       console.log("err", err)
@@ -38,15 +39,20 @@ function App() {
   }
 
   return (
-    <div className='col-md-12'>
-
-<div className='weatherBg'>
-      <h1>Weather</h1>
-      <input type='text' className='form-control' onChange={handleChangeInput} value={inputCity}/>
-      <button className='btn btn-primary' type='button' onClick={handleSearch}>sarch</button>
-      <h2>{data.name}</h2>
-      <h4>{((data?.main?.temp) - 273.15).toFixed(2)}°C</h4>
-</div>
+    <div className='box'>
+      <div className='card'>
+        <div className='search'>
+          <input type='text' className='form-control' onChange={handleChangeInput} value={inputCity} placeholder='Enter city name'></input>
+          <button className='btn btn-primary' type='button' onClick={handleSearch}>
+            <img src={Search} /></button>
+        </div>
+        <div className='weather'>
+        <img src={Rain} className='weather-icon'/>
+       
+        <h4>{((data?.main?.temp) - 273.15).toFixed(2)}°C</h4>
+         <h2>{data.name}</h2>
+        </div>
+      </div>
     </div>
   );
 }
